@@ -1,16 +1,18 @@
-var userKeySpoon = "b57026cf75ef47e3a58d4bc313ecba6d";
+var userKeySpoon = "edbc626b05a24657897af2a6bc662d6e";
 //apiKey=b57026cf75ef47e3a58d4bc313ecba6d
 //oldkey=037fad5998184d2eae5fae39c3814d71
+//newerkey = 7e636ba8f56842a084ab317215640a3a
+//newest key = edbc626b05a24657897af2a6bc662d6e
 
 console.log(obj.cuisines)
 
 // var dishNameInputEl = document.querySelector("#user-food-input");
-let displayMore = document.querySelector('#display-more > button');
+let displayMore = document.querySelector("button#display-more-restaurants");
 
 var numberOfRecipeCards = 3;
 
 // neil
-var displayRecipeEl = document.querySelector("#recipe-display");
+var displayRecipeEl = document.querySelector("button#recipe-display");
 
 // neil - takes title, image and link to display on page
 function displayRecipes(recipeTitle, recipeImg, recipeLink) {
