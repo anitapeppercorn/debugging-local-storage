@@ -1,13 +1,11 @@
-var zipAPIKey = "RLO4J280IDULHFYJ2Q7P";
-//old zipAPIkey = JVSMA0VD62UG6J85ZKQY
-//new zipAPIkey = RLO4J280IDULHFYJ2Q7P
-var searchButton = document.querySelector("button#search-button");
-var clearButton = document.querySelector("button#clear-button");
+var zipAPIKey = "DKAL53OVWYNIRCSEKZZM";
+var searchButton = document.querySelector("#search-button");
+var clearButton = document.querySelector("#clear-button");
 var dishInput = document.querySelector("#user-food-input").value;
-var dishNameInputForm = document.querySelector("button#search-button");
+var dishNameInputForm = document.querySelector("#search-button");
+
 // for alert modal
 var modalAlertCard = document.querySelector("#modal-display");
-
 
 // creates modal to alert issues to user
 function userAlert(message) {
@@ -32,8 +30,6 @@ function userAlert(message) {
 searchButton.addEventListener("click", function (){
   var userCuisineName = document.querySelector("#user-food-input").value
   var userZipInput = document.querySelector("#user-zipcode-input").value
-  console.log(dishInput)
-  console.log(userCuisineName, userZipInput)
   if(userCuisineName && userZipInput) {
     fetch(`https://api.zip-codes.com/ZipCodesAPI.svc/1.0/QuickGetZipCodeDetails/${userZipInput}?key=${zipAPIKey}`)
     .then(function(response) {
@@ -55,4 +51,43 @@ searchButton.addEventListener("click", function (){
     userAlert("Please enter what food you're craving for and what zip code you're in.");
   }  
 });
+
+// clear all search history
+// clearButton.addEventListener("click", function() {
+//   localStorage.clear();
+// });
+// clear all search history
+
+
+//clearButton.addEventListener("click", function() {
+//  localStorage.clear();
+//});
+    
+
+//function populateSearch() {
+//  console.log("func called")
+//  var dishInput = document.querySelector("#user-food-input").value;
+//  dishInput= localStorage.getItem("1")
+//}
+
+
+//store the value of the last searched food in local storage
+var lastFoodName = $("#user-food-input").val();
+storeInput(lastFoodName);
+
+
+//storage information
+function storeInput(lastFoodName){
+  localStorage.setItem("Last food searched", lastFoodName);
+}
+
+console.log("add toast time")
+
+var saveFoodStore = JSON.parse(window.localStorage.getItem("history")) || [];
+  if(saveFoodStore.length > 0){
+  M.toast({
+    html: `Craving awesome ${(localStorage.getItem("Last food searched"))} again?'<button onclick= "populateSearch()" class="btn-flat toast-action">Click Here</button>`,
+    classes: 'rounded '
+  })
+}
 

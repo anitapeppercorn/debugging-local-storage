@@ -1,39 +1,38 @@
-var userKeySpoon = "edbc626b05a24657897af2a6bc662d6e";
-//apiKey=b57026cf75ef47e3a58d4bc313ecba6d
-//oldkey=037fad5998184d2eae5fae39c3814d71
-//newerkey = 7e636ba8f56842a084ab317215640a3a
-//newest key = edbc626b05a24657897af2a6bc662d6e
-
-console.log(obj.cuisines)
-
-// var dishNameInputEl = document.querySelector("#user-food-input");
-let displayMore = document.querySelector("button#display-more-restaurants");
+var userKeySpoon = "d1bbd9945bf247e6b86623e862dd39a4";
+let displayMore = document.querySelector('#display-more > button');
+var displayMoreRecipes = document.querySelector('#display-more-recipes');
 
 var numberOfRecipeCards = 3;
 
 // neil
-var displayRecipeEl = document.querySelector("button#recipe-display");
+var displayRecipeEl = document.querySelector("#recipe-display");
 
 // neil - takes title, image and link to display on page
 function displayRecipes(recipeTitle, recipeImg, recipeLink) {
     //console.log(recipeTitle, recipeImg, recipeLink);
     
     //get needed variables
-    var recipeCard = `
-    <div class = "card">
-    <a href = "${recipeLink}" class = ""><h3 class = "">${recipeTitle}</h3></a>
-    </br>
-    <a href = "${recipeLink}" class = ""><img src = "${recipeImg}"></a>  
-    </div>
-    `
-    var recipeContainer = document.createElement("div");
-    recipeContainer.innerHTML = recipeCard;
-    displayRecipeEl.appendChild(recipeContainer);
+    // var recipeCard = `
+    // <div class = "card">
+    // <a href = "${recipeLink}" class = ""><h3 class = "">${recipeTitle}</h3></a>
+    // </br>
+    // <a href = "${recipeLink}" class = ""><img src = "${recipeImg}"></a>  
+    // </div>
+    // `;
+    var recipeLi = document.createElement('li');
+    recipeLi.setAttribute("id", recipeTitle);
+    recipeLi.innerHTML = `
+        <div class="collapsible-header">${recipeTitle}</div>
+        <div class="collapsible-body">
+            <a href = "${recipeLink}" class = ""><img src = "${recipeImg}"></a>  
+            </div>
+        </div>`;
+    var recipeContainerAccordion = document.querySelector("#recipe-container");
+    recipeContainerAccordion.appendChild(recipeLi);
 };
 
 // take repos to get Id of from results
 function getID(recipeId) {
-    
     fetch(`https://api.spoonacular.com/recipes/`
     + `${recipeId}/information?includeNutrition=false&apiKey=${userKeySpoon}`)
     .then(function(idResponse) {
@@ -49,22 +48,22 @@ function getID(recipeId) {
     })
 };
 
-// displayMore.addEventListener('click', function(event){
-//     let recipes = JSON.parse(window.localStorage.getItem('recipes'));
-//     let index = parseInt(window.localStorage.getItem('index'));
-//     console.log(index);
-//     if (index < recipes.length) {
-//         for ( i=0; i<3; i++) {     
-//             let ids = recipes[index+i];
-//             console.log(ids);
-//             getID(ids);
-//         }
-//         index+=3
-//         window.localStorage.setItem('index', index)
-//     } else {
-//         userAlert("There are no more results.");
-//     }
-// });
+displayMoreRecipes.addEventListener('click', function(event){
+    let recipes = JSON.parse(window.localStorage.getItem('recipes'));
+    let index = parseInt(window.localStorage.getItem('index'));
+    console.log(index);
+    if (index < recipes.length) {
+        for ( i=0; i<3; i++) {     
+            let ids = recipes[index+i];
+            console.log(ids);
+            getID(ids);
+        }
+        index+=3
+        window.localStorage.setItem('index', index)
+    } else {
+        userAlert("There are no more results.");
+    }
+});
 
 // fetch spoonacular for JSON data using user inputs
 function getRecipeRepos(dishName) {
@@ -96,7 +95,6 @@ function getRecipeRepos(dishName) {
         }
     })
 };
-console.log("The user has entered " + obj.cuisines);
 getRecipeRepos(obj.cuisines);
 
 // capture user input from submit event
@@ -111,14 +109,11 @@ function submitHandler(event) {
     } else {
         userAlert("Please enter a valid dish name.");
     }
-    console.log();
 };
 
-var elem = document.querySelector('.collapsible.expandable');
-var instance = M.Collapsible.init(elem, {
+var allAccordions = document.querySelectorAll('.collapsible'); // finds all accordions by only collapsible class more general than collapsible AND expandable
+var instance = M.Collapsible.init(allAccordions, {
   accordion: false
 });
 
- 
-
-//dishNameInputForm.addEventListener("submit", submitHandler);
+//M.toast({html: 'Craving some Sushi?'})      
