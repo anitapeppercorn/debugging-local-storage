@@ -64,16 +64,16 @@ searchButton.addEventListener("click", function (){
 //});
     
 
-//function populateSearch() {
-//  console.log("func called")
-//  var dishInput = document.querySelector("#user-food-input").value;
-//  dishInput= localStorage.getItem("1")
-//}
-
-
-//store the value of the last searched food in local storage
+function populateSearch() {
+  console.log("func called")
+  //store the value of the last searched food in local storage
 var lastFoodName = $("#user-food-input").val();
 storeInput(lastFoodName);
+
+}
+
+
+
 
 
 //storage information
